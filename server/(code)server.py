@@ -59,6 +59,16 @@ client_socket, client_addr = server_socket.accept()
 # 스레드 생성 및 실행
 thread_tx = threading.Thread(target=handler_tx, args=(client_socket,))
 thread_rx = threading.Thread(target=handler_rx, args=(client_socket,))
+# ,을 통해 튜플 형태로 전달
+# 스레드는 특정 함수를 실행-> 함수지정(target=), arg= 튜플로 인자전달
+# 함수를 그냥 호출하면 스레드가 생성되기도 전에 실행되버림, 그래서 함수 참조와 인자전달을 따로둠
 
-thread_tx.start()
-thread_rx.start()
+
+thread_tx.start() # 메세지 전송
+thread_rx.start() # 메세지 수신
+# 각각 독립적인 스레드에서 실행하여, 동시에 메시지를 주고받음
+
+# 스레드 종료 대기
+thread_rx.join()
+thread_tx.join()
+# 모든 스레드가 종료될 때까지 프로그램이 종료되지 않도록 대기 (=논데몬)
