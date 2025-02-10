@@ -12,16 +12,16 @@
 		for ($j=0; $j<($i*2)+1; $j++)
 			echo '*';	
 		echo "<br>";
-	}; 
+	}
 	# 역피라미드
-	for ($i=$n-1; $i>0; $i--){
+	for ($i=0; $i<$n-1; $i++){
 
 		# 공백
-		for ($j=0; $j;)
-			echo "&nbsp";
+		for ($j=0; $j<$i+1; $j++)
+			  echo "&nbsp";
 		# 별
-		for ($j=0; $j<($i*2)-1;)
-			echo '*';
+		for ($j=0; $j<($n*2-3)-($i*2); $j++)
+			  echo '*';
 		echo "<br>";
-	};
+	}
 ?>
