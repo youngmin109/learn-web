@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Seoul");
 $regist_day = date("Y-m-d H:i:s");
 
 // 데이터베이스 연결
-$con = mysqli_connect("localhost", "user", "12345", "sample");
+$con = mysqli_connect("localhost", "user", "12345", "user");
 
 // 게시글 수정 SQL 실행
 $sql = "UPDATE freeboard 
