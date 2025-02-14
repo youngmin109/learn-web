@@ -39,7 +39,7 @@ def handler_client(client_socket: socket.socket, client_addr):
         # with는 context manager를 활용하는 문법으로 리소스(파일,락, 소켓 등)를 안전하게 열고 닫도록 관리
         with client_list_lock: # 락을 사용하여 리스트 안전하게 수정
             if client_socket in client_list:
-                client_list.remove(client_socket)
+                client_list.remove(client_socket) # with를 나오면 안전하게 리소스를 반납
         #  자원을 정리
         client_socket.close()
         print(f"Client {client_addr} disconnected")
