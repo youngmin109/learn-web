@@ -27,6 +27,15 @@ if (!$row || get_user_id() != $row["user_id"]) {
     die("삭제 권한이 없습니다.");
 }
 
+// if (!$row) {
+//     die("해당 게시글을 찾을 수 없습니다.");
+// }
+
+// // 비밀번호 검증
+// if (!password_verify($password, $row["password"])) {
+//     die("비밀번호가 일치하지 않습니다.");
+// }
+
 // 해당 글 삭제
 $sql = "DELETE FROM freeboard WHERE num = $num";
 mysqli_query($con, $sql);
