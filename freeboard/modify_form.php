@@ -23,7 +23,7 @@ if (!$row) {
 }
 
 // 가져온 데이터를 변수에 저장
-$name = $row["name"];
+$name = $row["user_id"];
 $subject = $row["subject"];
 $content = $row["content"];
 $pass = $row["pass"];

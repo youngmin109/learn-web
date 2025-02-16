@@ -1,33 +1,38 @@
 <?php
-    // **한국 시간(KST)으로 설정**
-    date_default_timezone_set("Asia/Seoul");
+session_start(); // 세션 시작
 
-    # 사용자가 입력한 내용을 POST방식으로 받아 각각 저장
-	$name = $_POST["name"];				// 이름
-	$pass = $_POST["pass"];				// 비밀번호
-    $subject = $_POST["subject"];		// 제목
-    $content = $_POST["content"];		// 내용
+// **한국 시간(KST)으로 설정**
+date_default_timezone_set("Asia/Seoul");
 
-    # html함수를 사용하여 제목과 내용에 포함된 특수 기호를
-    # HTML표기로 변환하여 다시 저장장
-	$subject = htmlspecialchars($subject, ENT_QUOTES);	// NOQUOTES하면 ",' 표기변환X
-	$content = htmlspecialchars($content, ENT_QUOTES);
-	$regist_day = date("Y-m-d (H:i)");  // UTC 기준 현재의 '년-월-일 (시:분)'
+// 로그인 여부 확인 (비로그인 사용자는 글 작성 불가)
+if (!isset($_SESSION["user_id"])) {
+    die("로그인 후 글을 작성할 수 있습니다.");
+}
 
-    # MySQL 데이터베이스에 접속
-	$con = mysqli_connect("localhost", "user", "12345", "user");	// DB 연결
+// 사용자가 입력한 데이터 받기 (POST 값이 없을 경우 빈 문자열로 초기화)
+$user_id = $_SESSION["user_id"]; // 로그인한 사용자의 ID
+$subject = isset($_POST["subject"]) ? $_POST["subject"] : "";
+$content = isset($_POST["content"]) ? $_POST["content"] : "";
+$regist_day = date("Y-m-d H:i:s");  // '년-월-일 시:분:초' 형식으로 저장
 
-    # SQL 명령으로 값을 저장
-	$sql = "insert into freeboard (name, pass, subject, content, regist_day) ";	// 레코드 삽입 명령
-	$sql .= "values('$name', '$pass', '$subject', '$content', '$regist_day')";
+// HTML 특수문자 변환 (보안 강화)
+$subject = htmlspecialchars($subject, ENT_QUOTES);
+$content = htmlspecialchars($content, ENT_QUOTES);
 
-    // $sql에 저장된 명령 실행
-	mysqli_query($con, $sql);  
+// MySQL 데이터베이스 연결
+$con = mysqli_connect("localhost", "user", "12345", "user");
 
-	mysqli_close($con);       // DB 연결 끊기
+// SQL 실행 (pass 컬럼 제거)
+$sql = "INSERT INTO freeboard (user_id, subject, content, regist_day) 
+        VALUES ('$user_id', '$subject', '$content', '$regist_day')";
 
-    # 저장 후 글쓰기 폼으로 이동
-    header("Location: form.php");
+if (mysqli_query($con, $sql)) {
+    // 글 작성 성공 시 목록 페이지로 이동
+    header("Location: list.php");
     exit();
-?>
+} else {
+    echo "글 작성 실패: " . mysqli_error($con);
+}
 
+mysqli_close($con);
+?>
