@@ -7,7 +7,7 @@ PORT = 12345
 client_list = [] # 연결된 클라이언트 목록 # 공유자원
 client_list_lock = threading.Lock() # 스레드 동기화를 위한 Lock
 
-# 클라이언트 핸들러 함수수
+# 클라이언트 핸들러 함수
 def handler_client(client_socket: socket.socket, client_addr):
     """ 클라이언트와 메시지를 주고받고, 연결이 종료되면 목록에서 제거하는 함수"""
     
