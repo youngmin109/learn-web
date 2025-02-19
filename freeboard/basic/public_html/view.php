@@ -67,6 +67,8 @@ mysqli_close($con);
 
     <form action="delete.php" method="post" style="display:inline;">
         <input type="hidden" name="id" value="<?= $row["id"] ?>">
+        <label>비밀번호:</label>
+        <input type="password" name="password" required> 
         <button type="submit">삭제</button>
     </form>
 

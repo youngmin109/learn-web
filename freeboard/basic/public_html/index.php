@@ -1,10 +1,30 @@
 <?php
 include __DIR__ . "/../includes/db_connect.php";  // DB 연결
 
-// 게시글 목록 가져오기 (최신순 정렬)
-$sql = "SELECT * FROM freeboard ORDER BY id DESC" ;
-$result = mysqli_query($con, $sql);
+// 🔹 검색 조건 설정
+$search_type = isset($_GET["search_type"]) ? $_GET["search_type"] : "";
+$search_keyword = isset($_GET["search_keyword"]) ? $_GET["search_keyword"] : "";
 
+
+// 게시글 목록 가져오기 (최신순 정렬)
+$sql = "SELECT * FROM freeboard";
+
+// 🔹 검색어가 있는 경우 WHERE 조건 추가
+if (!empty($search_keyword)) {
+    $search_keyword = mysqli_real_escape_string($con, $search_keyword); // SQL 인젝션 방지
+    if ($search_type == "title") {
+        $sql .= " WHERE subject LIKE '%$search_keyword%'";
+    } elseif ($search_type == "content") {
+        $sql .= " WHERE content LIKE '%$search_keyword%'";
+    } elseif ($search_type == "title_content") {
+        $sql .= " WHERE subject LIKE '%$search_keyword%' OR content LIKE '%$search_keyword%'";
+    }
+}
+
+// 🔹 최신순 정렬
+$sql .= " ORDER BY id DESC";
+
+$result = mysqli_query($con, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +37,17 @@ $result = mysqli_query($con, $sql);
 
 <body>
     <h2>게시판 목록</h2>
+    <!-- 🔹 검색 폼 -->
+    <form action="index.php" method="get">
+        <select name="search_type">
+            <option value="title" <?= $search_type == "title" ? "selected" : "" ?>>제목</option>
+            <option value="content" <?= $search_type == "content" ? "selected" : "" ?>>내용</option>
+            <option value="title_content" <?= $search_type == "title_content" ? "selected" : "" ?>>제목 + 내용</option>
+        </select>
+        <input type="text" name="search_keyword" value="<?= htmlspecialchars($search_keyword) ?>" placeholder="검색어 입력">
+        <button type="submit">검색</button>
+    </form>
+    
 
     <!-- 게시글 목록 출력 -->
     <table border="1">
