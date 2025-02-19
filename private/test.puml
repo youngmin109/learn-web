@@ -1,0 +1,46 @@
+@startuml
+title 게시판 흐름도 (PHP + MySQL)
+
+actor 사용자
+participant "index.php (목록)" as Index
+participant "form.php (글쓰기)" as Form
+participant "insert.php (DB 저장)" as Insert
+participant "view.php (게시글 보기)" as View
+participant "modify_form.php (수정폼)" as ModifyForm
+participant "modify.php (DB 수정)" as Modify
+participant "delete.php (DB 삭제)" as Delete
+database "MySQL (basic DB)" as DB
+
+== 게시글 목록 ==
+사용자 -> Index : 게시판 접속 (index.php)
+Index -> DB : SELECT * FROM freeboard
+DB --> Index : 게시글 목록 반환
+
+== 게시글 작성 ==
+사용자 -> Form : 글쓰기 버튼 클릭 (form.php)
+Form -> Insert : 제목, 내용 입력 후 제출
+Insert -> DB : INSERT INTO freeboard (제목, 내용, 작성자)
+DB --> Insert : 저장 완료
+Insert -> Index : 목록 페이지로 이동 (header("Location: index.php"))
+
+== 게시글 조회 ==
+사용자 -> View : 게시글 클릭 (view.php?id=번호)
+View -> DB : SELECT * FROM freeboard WHERE id=번호
+DB --> View : 게시글 데이터 반환
+
+== 게시글 수정 ==
+사용자 -> ModifyForm : 수정 버튼 클릭 (modify_form.php?id=번호)
+ModifyForm -> DB : SELECT * FROM freeboard WHERE id=번호
+DB --> ModifyForm : 기존 데이터 반환
+사용자 -> Modify : 수정 내용 입력 후 제출
+Modify -> DB : UPDATE freeboard SET 제목=..., 내용=... WHERE id=번호
+DB --> Modify : 수정 완료
+Modify -> Index : 목록 페이지로 이동
+
+== 게시글 삭제 ==
+사용자 -> Delete : 삭제 버튼 클릭 (delete.php?id=번호)
+Delete -> DB : DELETE FROM freeboard WHERE id=번호
+DB --> Delete : 삭제 완료
+Delete -> Index : 목록 페이지로 이동
+
+@enduml
