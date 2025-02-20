@@ -1,123 +1,106 @@
-클라이언트
+# 클클라이언트 프로그램
 
 import socket
+import pygame
 import threading
-import json
 
-# 서버 주소 및 포트 설정
-SERVER_HOST = "127.0.0.1"
-SERVER_PORT = 12345
+# 클라이언트 설정
+SERVER_IP = "210.101.236.179"
+PORT = 12345
 
-def send_message(sock, username):
-    """사용자로부터 입력을 받아 서버에 메시지를 전송하는 함수"""
+# Pygame 설정
+pygame.init()   
+WIDTH, HEIGHT = 800, 600
+PADDLE_WIDTH, PADDLE_HEIGHT = 100, 10
+BALL_RADIUS = 10
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLACK = (0, 0, 0)
+
+# UDP 소켓 설정
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# 화면 설정
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("네트워크 탁구 게임")
+clock = pygame.time.Clock()
+
+# 초기 값
+ball_x, ball_y = WIDTH // 2, HEIGHT // 2
+player1_x = WIDTH // 2 - PADDLE_WIDTH // 2
+player2_x = WIDTH // 2 - PADDLE_WIDTH // 2
+player_role = None  # P1인지 P2인지 서버에서 전달받음
+score_p1, score_p2 = 0, 0  # 점수 저장
+
+def receive_data(client_socket):
+    global ball_x, ball_y, player1_x, player2_x, score_p1, score_p2, player_role
+    
+    BUFFER_SIZE = 1024
+
     while True:
         try:
-            message = input(f"[{username}] ")  # 사용자 입력 받기
-            if message.lower() == "exit":
-                # 종료 메시지 전송 후 루프 종료
-                sock.sendall(json.dumps({"type": "exit"}).encode("utf-8"))
+            if client_socket.fileno() == -1:  # 소켓이 닫혔는지 확인
+                print("⚠️ 클라이언트 소켓이 닫혔습니다. 데이터 수신을 중단합니다.")
                 break
-            
-            if message.startswith("/pm"):
-                # 귓속말 메시지 처리 ("/pm 닉네임 메시지")
-                parts = message.split(" ", 2)
-                if len(parts) < 3:
-                    print("[사용법] /pm 닉네임 메시지")
-                    continue
-                
-                private_message = json.dumps({
-                    "type": "private",
-                    "recipient": parts[1],
-                    "content": parts[2]
-                })
-                sock.sendall(private_message.encode("utf-8"))
-                print(f"[나 -> {parts[1]}] {parts[2]}")
-            else:
-                # 일반 메시지(전체 채팅) 전송
-                broadcast_message = json.dumps({
-                    "type": "broadcast",
-                    "content": message
-                })
-                sock.sendall(broadcast_message.encode("utf-8"))
-        except Exception as e:
-            print(f"[송신 오류] {e}")
-            break
-    sock.close()
+            data, _ = client_socket.recvfrom(BUFFER_SIZE)
+            game_state = data.decode().split(",")
 
-def receive_message(sock, username):
-    """서버로부터 수신된 메시지를 출력하는 함수"""
-    while True:
-        try:
-            received_data = sock.recv(1024).decode("utf-8")
-            if not received_data:
-                break  # 연결 종료
+            if len(game_state) == 1:  # 처음 연결 시 P1 또는 P2 역할을 받음
+                player_role = game_state[0]
+                print(f"🎮 역할 할당됨: {player_role}")
+                continue
 
-            try:
-                message_data = json.loads(received_data)
-                message_type = message_data.get("type")
-                content = message_data.get("content")
-                sender = message_data.get("from")
-                
-                # 메시지 유형별 출력 형식 지정
-                if message_type == "notice":
-                    print(f"📢 {content}")  # 공지 메시지
-                elif message_type == "private":
-                    print(f"💌 [귓속말] ({sender}): {content}")  # 귓속말
-                elif message_type == "message":
-                    print(f"({sender}): {content}")  # 일반 채팅 메시지
-                else:
-                    print(f"🚫 알 수 없는 메시지 유형: {content}")
-
-                # 입력 프롬프트 유지
-                print(f"\r[{username}] ", end="")
-            except json.JSONDecodeError:
-                print("[JSON 오류] 수신된 데이터 파싱 실패")
-        except Exception as e:
-            print(f"[수신 오류] {e}")
-            break
-    
-    print("[연결 종료] 서버와의 연결이 끊어졌습니다.")
-    sock.close()
-
-# 클라이언트 실행
-try:
-    # 서버에 연결
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((SERVER_HOST, SERVER_PORT))
-    
-    # 서버로부터 닉네임 요청 메시지 수신
-    server_response = client_socket.recv(1024).decode("utf-8")
-    response_data = json.loads(server_response)
-    
-    if response_data.get("type") == "request":
-        # 닉네임 입력 후 서버에 전송
-        username = input("닉네임을 입력하세요: ").strip()
-        client_socket.sendall(json.dumps({"type": "nickname", "content": username}).encode("utf-8"))
+            print(game_state)
+            ball_x, ball_y = int(game_state[0]), int(game_state[1])
+            player1_x, player2_x = int(game_state[2]), int(game_state[3])
+            score_p1, score_p2 = int(game_state[4]), int(game_state[5])
         
-        # 서버 응답 확인
-        server_response = client_socket.recv(1024).decode("utf-8")
-        response_data = json.loads(server_response)
-        
-        if response_data.get("type") == "success":
-            # 메시지 송신 및 수신을 위한 스레드 실행
-            send_thread = threading.Thread(target=send_message, args=(client_socket, username), daemon=True)
-            receive_thread = threading.Thread(target=receive_message, args=(client_socket, username), daemon=True)
-            
-            send_thread.start()
-            receive_thread.start()
-            
-            # 수신 스레드가 종료될 때까지 대기
-            receive_thread.join()
-        else:
-            # 닉네임 중복 시 오류 메시지 출력
-            print(f"🚫 닉네임 중복: {response_data['content']}")
-    else:
-        print(f"🚫 서버 응답 오류: {response_data['content']}")
-except Exception as e:
-    print(f"[클라이언트 오류] {e}")
-except KeyboardInterrupt:
-    # Ctrl + C 입력 시 종료
-    pass
-finally:
-    client_socket.close()
-    print("[클라이언트 종료]")
+        except BlockingIOError:
+            continue
+        except OSError as e:
+            print(f"❌ 데이터 수신 오류: {e}")
+            break  # 오류 발생 시 스레드 종료
+
+# 서버에 연결 시작
+client_socket.sendto("hello".encode('utf-8'), (SERVER_IP, PORT))
+
+# 수신 스레드 시작
+threading.Thread(target=receive_data, daemon=True, args=(client_socket,)).start()
+
+running = True
+while running:
+    screen.fill(BLACK)
+
+    # 이벤트 처리 (창 닫기)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # 🎯 연속적인 키 입력 처리 (키가 계속 눌려있으면 지속 실행)
+    keys = pygame.key.get_pressed()
+    if player_role == "P1":  # 플레이어 1이면
+        if keys[pygame.K_LEFT]:
+            client_socket.sendto("LEFT_P1".encode(), (SERVER_IP, PORT))
+        if keys[pygame.K_RIGHT]:
+            client_socket.sendto("RIGHT_P1".encode(), (SERVER_IP, PORT))
+    elif player_role == "P2":  # 플레이어 2이면
+        if keys[pygame.K_LEFT]:
+            client_socket.sendto("LEFT_P2".encode(), (SERVER_IP, PORT))
+        if keys[pygame.K_RIGHT]:
+            client_socket.sendto("RIGHT_P2".encode(), (SERVER_IP, PORT))
+
+    # 🎾 공과 패들 그리기
+    pygame.draw.circle(screen, WHITE, (ball_x, ball_y), BALL_RADIUS)  # 공
+    pygame.draw.rect(screen, RED, (player1_x, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT))  # P1 패들
+    pygame.draw.rect(screen, RED, (player2_x, 0, PADDLE_WIDTH, PADDLE_HEIGHT))  # P2 패들 (위쪽)
+
+    # 점수 표시
+    font = pygame.font.Font(None, 36)
+    score_text = font.render(f"P1: {score_p1}  P2: {score_p2}", True, WHITE)
+    screen.blit(score_text, (WIDTH // 2 - 50, 20))
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+client_socket.close()
