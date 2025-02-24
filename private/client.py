@@ -1,4 +1,3 @@
-Client
 
 import socket
 
@@ -10,7 +9,7 @@ PORT = 12345        # 서버가 수신 대기하는 포트 번호
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # 서버에 연결 요청 (블로킹 상태, 서버가 응답할 때까지 대기)
-client_socket.connect((HOST, PORT))
+client_socket.connect((HOST, PORT)) # 여기서 시리웨이핸드쉐이크가 일어남
 
 while True:
     # 사용자 입력을 받아 메시지를 전송 (블로킹 상태)
