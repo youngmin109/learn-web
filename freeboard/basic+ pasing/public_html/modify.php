@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 비밀번호가 일치하면 업데이트 실행
-    $sql = "UPDATE freeboard SET name='$name', subject='$subject', content='$content' WHERE id=$id";
+    $sql = "UPDATE freeboard SET name='$name', subject='$subject', 
+            content='$content' WHERE id=$id";
     if (mysqli_query($con, $sql)) {
         header("Location: index.php");
         exit();
