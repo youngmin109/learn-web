@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>게시글 입력</h2>
+    <form action="insert.php" method="post" enctype="multipart/form-data">
+        <table border="1">
+            <tr>
+                <td><label for="title">제목</label></td>
+                <td><input type="text" name="title" id="title" required></td>
+            </tr>
+            <tr>
+                <td><label for="author">작성자</label></td>
+                <td><input type="text" name="author" id="author" required></td>
+            </tr>
+            <tr>
+                <td><label for="password">비밀번호</label></td>
+                <td><input type="password" name="password" id="password" required></td>
+            </tr>
+            <tr>
+                <td><label for="content">내용</label></td>
+                <td><textarea name="content" id="content" rows="5" required></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="file">파일 첨부</label></td>
+                <td><input type="file" name="file" id="file"></td>
+            </tr>
+        </table>
+        <button type="submit">등록</button>
+        <button type="button" onclick="location.href='index.php'">취소</button>
+    </form>
+</body>
+
+</html>
