@@ -6,7 +6,7 @@ if (!isset($_GET["file"])) {
     die("잘못된 접근입니다.");
 }
 
-$stored_name = basename($_GET["file"]); // 보안상 basename 사용
+$stored_name = basename($_GET["file"]); // 보안상 basename 사용 ../ 경로조작 방지
 $file_path = __DIR__ . "/../uploads/" . $stored_name; // 실제 저장된 위치
 
 // 파일이 존재하는지 확인
@@ -15,8 +15,8 @@ if (!file_exists($file_path)) {
 }
 
 // 파일 다운로드 처리
-header("Content-Description: File Transfer");
-header("Content-Type: application/octet-stream");
+header("Content-Description: File Transfer"); // 파일을 다운로드 하는 과정 -> 브라우저에 전달
+header("Content-Type: application/octet-stream"); // 
 header("Content-Disposition: attachment; filename=" . urlencode($stored_name));
 header("Content-Length: " . filesize($file_path));
 readfile($file_path);

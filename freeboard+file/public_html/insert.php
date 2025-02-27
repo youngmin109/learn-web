@@ -14,11 +14,17 @@ $post_id = mysqli_insert_id($con);  // 삽입된 게시글 ID 가져오기
 
 // 파일 업로드 처리
 if (!empty($_FILES["file"]["name"])) {
+    // "name" => "example.jpg",         // 메타데이터 (파일명)
+    // "type" => "image/jpeg",          // 메타데이터 (파일 타입)
+    // "tmp_name" => "/tmp/php12345.tmp",  // 실제 바이너리 파일 (임시 저장된 파일)
+    // "error" => 0,                    // 오류 코드 (0이면 정상)
+    // "size" => 1048576                 // 메타데이터 (파일 크기)
+
     $original_name = $_FILES["file"]["name"];
-    $stored_name = uniqid
-    () . "_" . $original_name;  // 중복 방지를 위해 타임스탬프 추가
+    $stored_name = uniqid() . "_" . $original_name;  // 중복 방지
     $upload_path = __DIR__ . "/../uploads/" . $stored_name;
 
+    // 최종저장
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $upload_path)) {
         // 파일 정보 DB 저장
         $file_sql = "INSERT INTO files (post_id, original_name, stored_name) VALUES ($post_id, '$original_name', '$stored_name')";

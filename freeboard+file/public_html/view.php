@@ -115,7 +115,8 @@ function display_comments($parent_id = NULL, $depth = 0)
         <?php if ($file) : ?>
             <tr>
                 <td><strong>첨부파일:</strong></td>
-                <td><a href="download.php?file=<?= urlencode($file["stored_name"]) ?>"><?= htmlspecialchars($file["original_name"]) ?></a></td>
+                <td><a href="download.php?file=<?= urlencode($file["stored_name"]) ?>">
+                    <?= htmlspecialchars($file["original_name"]) ?></a></td>
             </tr>
         <?php endif; ?>
 
