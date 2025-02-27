@@ -9,6 +9,8 @@
 <body>
     <h2>게시글 작성</h2>
     <form action="insert.php" method="post" enctype="multipart/form-data">
+    <!-- 파일 업로드를 가능하게함 text / file(바이너리) 따로 전송 
+     enctype = form 태그에서 데이터를 서버로 전송하는 방식을 정의하는 속성-->
         <table border="1">
             <tr>
                 <td><label for="title">제목</label></td>
