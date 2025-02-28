@@ -74,7 +74,7 @@ function display_comments($parent_id = NULL, $depth = 0)
         echo "<input type='password' name='password' placeholder='비밀번호 입력' required>";
         echo "<button type='submit' onclick='return confirm(\"댓글을 삭제하시겠습니까?\");'>삭제</button>";
         echo "</form>";
-
+        
         display_comments($comment["id"], $depth + 1); // 대댓글 출력 (재귀함수)
         echo "</li>";
     }

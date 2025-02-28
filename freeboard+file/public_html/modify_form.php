@@ -57,7 +57,7 @@ if (!$post) {
                     $file_sql = "SELECT * FROM files WHERE post_id = $id";
                     $file_result = mysqli_query($con, $file_sql);
                     $file = mysqli_fetch_assoc($file_result);
-
+    
                     if ($file) :
                     ?>
                         <p>현재 파일: <a href="download.php?file=<?= $file["stored_name"] ?>"><?= $file["original_name"] ?></a></p>

@@ -28,3 +28,7 @@ $post_id = (int)$_GET["post_id"];
     <a href="view.php?id=<?= $post_id ?>">취소</a>
 </body>
 </html>
+
+<?php 
+// 수정 - 25-02-28
+?>

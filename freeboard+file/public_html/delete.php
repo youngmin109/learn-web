@@ -5,7 +5,7 @@ include __DIR__ . "/../includes/db_connect.php";  // DB 연결
 $id = (int)$_POST["id"];
 $password = $_POST["password"];
 
-// 게시글 정보 가져오기
+// 게시글 정보 가져오기 
 $check_sql = "SELECT * FROM freeboard WHERE id = $id";
 $check_result = mysqli_query($con, $check_sql);
 $post = mysqli_fetch_assoc($check_result);
