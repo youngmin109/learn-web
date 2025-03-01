@@ -77,4 +77,5 @@ mysqli_close($con);
 
     </fieldset>
 </body>
+<!-- 수정 25.03.01!--> 
 </html>
