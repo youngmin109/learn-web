@@ -12,6 +12,8 @@ $sql = "INSERT INTO freeboard (title, author, password, content) VALUES ('$title
 mysqli_query($con, $sql);
 $post_id = mysqli_insert_id($con);  // 삽입된 게시글 ID 가져오기
 
+// POST와 같은 배열 요소로 값들이 저장된다.
+// 같은 초전역 변수로 스크립트로 데이터를 전달하는 역할을 한다.
 // 파일 업로드 처리
 if (!empty($_FILES["file"]["name"])) {
     // "name" => "example.jpg",         // 메타데이터 (파일명)
