@@ -1,3 +1,5 @@
+@import url("./box.css");
+/* CSS 주석과 사용 방식에 대해 배움 */
 div {
   width: 200px;
   height: 200px;
