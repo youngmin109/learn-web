@@ -10,4 +10,6 @@
 - [webSystem Notion](https://www.notion.so/1-Web-system-1adb6d9c51e280b3817bc6d12b77d71d?pvs=4) <br>
 - database skeme <br>
 - wepApp basic <br>
+- container docker
+
 2025.4 ~ - JavaScript <br>
