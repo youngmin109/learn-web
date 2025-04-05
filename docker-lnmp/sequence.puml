@@ -1,0 +1,23 @@
+@startuml
+actor Developer
+participant "Docker" as Docker
+participant "컨테이너" as Container
+participant "브라우저" as Browser
+
+Developer -> Docker: Dockerfile, start.sh, default, dbtest.php 작성
+Developer -> Docker: docker build -t my_lnmp .
+Docker -> Docker: 이미지 빌드
+
+Developer -> Docker: docker run --name lnmp -d -p 8080:80 my_lnmp
+Docker -> Container: 컨테이너 생성 및 start.sh 실행
+
+Container -> Container: MySQL 시작 및 root 설정
+Container -> Container: PHP-FPM 시작 (소켓 생성)
+Container -> Container: Nginx 시작 (php 설정 포함)
+
+Browser -> Container: http://localhost:8080/dbtest.php 요청
+Container -> Container: Nginx가 요청 수신
+Container -> Container: Nginx가 PHP-FPM으로 전달
+Container -> Container: PHP-FPM 결과 반환
+Container -> Browser: HTML 결과 응답
+@enduml
