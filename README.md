@@ -1,4 +1,4 @@
-# Web System & Container Environment (Study Log)
+# Web System (Study Log)
 
 ## Timeline
 - **2024.11 ~**: HTML & CSS
@@ -41,6 +41,11 @@
 
 ---
 
+### HTML & CSS 
+- HTML은 문서를 구조화 ->
+- CSS는 디자인을 하기위한 언어
+
 ## 🔗 Reference
 - [Web System Notion 기록](https://www.notion.so/1-Web-system-1adb6d9c51e280b3817bc6d12b77d71d?pvs=4)
 - [TIL 기록용 Notion](https://www.notion.so/TIL-16c59b1929de800f8638c1ba8c5140b6?pvs=4)
+  
