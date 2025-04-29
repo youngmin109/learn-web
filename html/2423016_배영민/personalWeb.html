@@ -79,15 +79,15 @@
 
             <!-- 개인 동영상 (controls 사용) -->
             <h3>작년 겨울 인스파이어 호텔 갔을 때</h3>
-            <video controls width="560" height="315">
+            <video controls width="560" height="315" autoplay muted> <!-- 자동시작, 음소거 상태로 시작-->
                 <source src="images/myVideo.mp4" type="video/mp4">
                 동영상을 지원하지 않는 브라우저입니다.
             </video>
 
             <!-- 오디오 추천 (controls 사용)-->
             <h3>클래식 음악</h3>
-            <audio controls>
-                <source src="images/myMusic.mp3" type="audio/mp3">
+            <audio controls autoplay loop>
+                <source src="images/myMusic.mp3" type="audio/mp3"> <!-- 자동 재생, 반복재생-->
                 지원하지 않는 브라우저입니다.
             </audio>
         </article>
@@ -96,7 +96,7 @@
         <aside id="links">
             <h2>좋아하는 사이트</h2>
             <ul>
-                <li>
+                <li> 
                     <a href="https://www.deepl.com/ko/translator" target="_blank" rel="noopener">DeepL</a>
                     <p>정확하고 유연한 번역을 제공합니다.</p>
                 </li>
