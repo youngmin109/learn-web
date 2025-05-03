@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>요소 조회 및 설정</title>
+</head>
+<body>
+    <header>
+    <h1 id="title" data-topic="dom">안녕하세요</h1>
+    <p id="desc">DOM 조작 예제입니다.</p>
+    <nav id="12">
+        <span>1. 갑을 </span><span>2. 병정 </span><span>3. 무기 </span>
+    </nav>
+    </header>
+
+    <script>
+        // 요소 조회
+        const heading = document.getElementById("title");
+        const desc = document.querySelector("#desc"); // CSS 선택자로 <p>요소 선택
+        const nav12 = document.getElementById("12");
+
+        // 속성 값 조회
+        console.log("ID:", heading.getAttribute("id")); 
+        console.log("data-topic:", heading.getAttribute("data-topic")); 
+        console.log("12: ", nav12.getAttribute("id"))
+
+        // 새로운 속성 추가
+        heading.setAttribute("data-role", "heading"); // data-role 속성 추가
+        desc.setAttribute("title", "마우스를 올리면 나옵니다"); // 마우스 오버 시 tooltip
+
+        // 기존 속성 값 변경
+        heading.setAttribute('id', 'title-2');  // id값을 title-2로 수정
+
+        // 속성 제거
+        heading.removeAttribute('data-topic');
+    </script>
+
+    <ul>
+        <li>Apple</li>
+        <li>Banana</li>
+    </ul>
+
+    <script>
+        const htmlCollection = document.getElementsByTagName("li");
+        const nodeList = document.querySelectorAll("li");
+
+        console.log(htmlCollection); // live collection (DOM을 참조 [변화 감지])
+        console.log(nodeList); // static collection (그 시점의 스냅샷)
+
+        // 반복
+        for (let item of htmlCollection) {
+            console.log(item.textContent);
+        }
+
+        nodeList.forEach(node => console.log(node.textContent));
+    </script>
+
+</body>
+</html>

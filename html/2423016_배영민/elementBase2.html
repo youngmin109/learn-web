@@ -1,0 +1,17 @@
+<div id="content-box">
+    <p style="display: none;">숨겨진 텍스트</p>
+    <strong>강조된 텍스트</strong>
+</div>
+
+<script>
+    const box = document.getElementById("content-box");
+
+    // 1. textContent -> 모든 텍스트를 가져옴 (숨김 포함, HTML 해석 X)
+    console.log("textContent:", box.textContent);
+    
+    // 2. innerText -> 눈에 보이는 텍스트만 가져옴 (렌더링 기준)
+    console.log("innerText:", box.innerText);
+
+    // 3. innerHTML -> HTML 태그 포함한 전체 내용 문자열로 반환
+    console.log("innerHTML:", box.innerHTML);
+</script>
