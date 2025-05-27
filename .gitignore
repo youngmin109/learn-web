@@ -38,3 +38,9 @@ venv/
 *.tar
 output/
 __results__/
+
+# Node.js 관련 무시 설정
+node_modules/
+dist/
+.cache/
+*.log
