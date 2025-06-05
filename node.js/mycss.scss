@@ -5,3 +5,8 @@ $mycolor:red;
 h1 {
     color: $mycolor
 }
+
+.btn btn-secondary {
+    background-color: $mycolor;
+    color: white;
+}
