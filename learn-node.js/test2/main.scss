@@ -1,0 +1,52 @@
+$background_color: black;
+@import "./var.scss";
+
+// @을 씀으로써 속성을 함수처럼 사용할 수 있다.
+
+@mixin align-center() {
+  display: flex;
+  justify-content: center;
+  align-items: 2px;
+  @content;
+}
+@mixin my-border($bd-color: red) {
+  border-color: $bd-color;
+  border-style: dashed;
+  border-width: 2px;
+}
+body {
+  $my_color: blue !global;
+  background-color: $background_color;
+  h1 {
+    color: $my_color;
+  }
+
+  .card_container {
+    @for $i from 1 through 5 {
+      .card:nth-child(#{$i}) {
+        @if $i % 2 == 0 {
+          background-color: green;
+        } @else {
+          background-color: red;
+        }
+        width: 100px * $i;
+        height: 100px / $i;
+        border: 2px solid blueviolet;
+      }
+    }
+  }
+}
+
+.img_container {
+  .img {
+    @include align-center();
+    @include my-border();
+    width: 50px;
+    height: 50px;
+    background-color: aqua;
+  }
+}
+
+.card_container .card {
+  background-color: $my_color;
+}
