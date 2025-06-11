@@ -1,0 +1,16 @@
+
+.parent {
+    font-size: 20px;
+    background-color: aqua;
+    width: 100px;
+    height: auto;
+    margin: 10px -10px;
+    border: 4px solid black;
+}
+
+.child {
+    background-color: orange;
+    width: 50px;
+    height: auto;
+}
+
