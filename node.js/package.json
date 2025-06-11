@@ -2,8 +2,8 @@
   "name": "node",
   "version": "1.0.0",
   "dev": "parcel index.html",
-  "scripts": { 
-    "dev": "parcel index.html", 
+  "scripts": {
+    "dev": "parcel index.html",
     "build": "parcel build index.html"
   },
   "keywords": [],
@@ -16,7 +16,6 @@
   "dependencies": {
     "bootstrap": "^5.3.6"
   },
-
   "directories": {
     "test": "test"
   },
