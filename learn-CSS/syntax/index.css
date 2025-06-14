@@ -1,29 +1,35 @@
 
 .parent {
-    font-size: 20px;
-    background-color: aqua;
-    width: 100px;
-    height: auto;
-    margin: 10px -10px;
-    border: 4px solid black;
+    position: relative;
+    width: 50vm;
+    height: 50vm;
+    background-color: lightblue;
 }
 
 .child {
-    background-color: orange;
+    position: relative;
     width: 50px;
-    height: auto;
+    height: 50px;
+    background-color: lightcoral; 
+    border: 2px solid;
+    z-index: 3;
 }
 
-a {
-    display: block;
+.child:nth-child(1) {
     width: 100px;
     height: 100px;
-    background-color: red;
-    color: green;
-    text-align: center;
-    background-size: 200px;
-    background-image: url(../cardHeartsQ.png);
-    background-position: center;
-    background-attachment: scroll;
+    background-color: lightcoral;
+    border: 4px solid darkred;
+    position: absolute;
+    z-index: 1;
 }
 
+.child:nth-child(3) {
+    width: 100px;
+    height: 100px;
+    background-color: lightgreen;
+    border: 4px solid darkgreen;
+    position : absolute;
+    left: 50px;
+    bottom: 100px;
+}
