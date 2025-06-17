@@ -1,0 +1,63 @@
+body {
+  background-color: black;
+}
+
+.card-box {
+  max-width: 800px; // 최대 너비를 800px로 설정
+  min-width: 100px; // 최소 너비를 300px로 설정
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; // 자식 요소들을 가운데 정렬
+  align-items: center; // 자식 요소들을 세로로 가운데 정렬
+
+  border: 1px solid white;
+  gap: 5px;
+  margin: 0 auto; // auto는 남은 공간을 양쪽에 균등하게 배분
+
+  .card-container {
+    width: 100px;
+    height: 150px;
+
+    .card {
+      width: 100%; // 100%는 부모 요소의 너비를 기준으로 함, 즉 .card-container의 너비를 기준으로 함
+      height: 100%;
+      opacity: 0.5;
+      border: 1px solid red;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: transform 0.8s;
+    }
+
+    .card:hover {
+      border: 30px solid blue;
+      transform: scale(1) rotate(180deg);
+      opacity: 1;
+      z-index: 10;
+    }
+  }
+}
+
+$path: "./Cards/";
+$prefix: "cardDiamonds";
+
+@for $i from 1 through 13 {
+  $lable: $i;
+
+  @if $i == 1 {
+    $lable: "a";
+  } @else if $i == 11 {
+    $lable: "J";
+  } @else if $i == 12 {
+    $lable: "Q";
+  } @else if $i == 13 {
+    $lable: "K";
+  }
+
+  // nth-child는 
+  .card-box .card-container:nth-child(#{$i}) .card {
+    background-image: url("#{$path}#{$prefix}#{$lable}.png");
+  }
+}
+
+
