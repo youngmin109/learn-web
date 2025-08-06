@@ -1,3 +1,14 @@
+<?php
+// 세션 에러 메시지 출력
+session_start();
+
+if (isset($_SESSION['error'])) {
+    echo $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
