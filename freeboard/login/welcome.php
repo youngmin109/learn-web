@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
-?>
+?> 
 
 <!-- 인증된 사용자에게 환영 메시지 출력 -->
 <!-- - 세션에 저장된 사용자 이름을 HTML 이스케이프 처리하여 출력 -->

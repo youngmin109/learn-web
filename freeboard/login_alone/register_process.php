@@ -24,12 +24,9 @@ if ($username=='' || $password=='' || $name=='') {
 // db_connect 불러오기
 require_once 'db_connect.php';
 
-// 예외 전역 설정
-mysqli_report(MYSQLI_REPORT_STRICT);
-
 // 예외 처리
 try {
-    $mysql = connect_sql();
+    $mysql = connect_mysql();
 } catch (mysqli_sql_exception $e) {
     // 연결 실패
     error_log('DB 연결 오류: ' . $e->getMessage());
