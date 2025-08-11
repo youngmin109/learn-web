@@ -1,11 +1,11 @@
 <?php
 // 세션 에러 출력
+session_start();
 if (isset($_SESSION['error'])) {
     echo $_SESSION['error'];
     unset($_SESSION['error']);
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>

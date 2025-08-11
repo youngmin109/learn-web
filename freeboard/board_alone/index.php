@@ -1,8 +1,7 @@
 <?php
-require_once './init.php';
-
 // 글 목록 보기
 // 세션 에러 출력
+session_start();
 if (isset($_SESSION['error'])) {
     echo $_SESSION['error'];
     unset($_SESSION['error']);
@@ -13,6 +12,7 @@ $rows = [];
 // 1. DB 연결
 // (try문) DB 객체 생성 (실패시 -> catch문)
 try {
+    require_once 'init.php';
     $mysqli = db_con();
 
     // 2. 게시판 불러 오기
@@ -69,7 +69,9 @@ try {
             <?php foreach ($rows as $r): ?>
                 <tr>
                     <td><?= htmlspecialchars($r['id']) ?></td>
-                    <td><?= htmlspecialchars($r['title']) ?></td>
+                    <td>
+                        <a href="view.php?id=<?= $r['id']?>">
+                        <?= htmlspecialchars($r['title']) ?></a></td>
                     <td><?= htmlspecialchars($r['name']) ?></td>
                     <td><?= htmlspecialchars($r['created_at']) ?></td>
                 </tr>

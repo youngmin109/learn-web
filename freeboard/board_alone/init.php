@@ -15,11 +15,13 @@ function db_con() {
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // 세션 설정
-session_start();
+// if (session_status() !== PHP_SESSION_ACTIVE) {
+//     session_start();}
 // 공통 헬퍼
 // 기본값 설정
 function fail(string $msg, string $to = 'index.php') {
     $_SESSION['error'] = $msg;
     header("Location: {$to}");
+    exit;
 }
 ?>
