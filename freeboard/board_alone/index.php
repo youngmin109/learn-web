@@ -5,7 +5,11 @@ session_start();
 if (isset($_SESSION['error'])) {
     echo $_SESSION['error'];
     unset($_SESSION['error']);
-    exit;
+}
+// 세션 성공 출력
+if (isset($_SESSION['success'])) {
+    echo $_SESSION['success'];
+    unset($_SESSION['success']);
 }
 
 $rows = [];

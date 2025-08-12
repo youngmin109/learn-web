@@ -21,7 +21,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 // 기본값 설정
 function fail(string $msg, string $to = 'index.php') {
     $_SESSION['error'] = $msg;
-    header("Location: {$to}");
+    header("Location: $to");
     exit;
 }
 ?>

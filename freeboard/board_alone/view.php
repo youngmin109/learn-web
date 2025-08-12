@@ -56,7 +56,7 @@ finally {
     3. 게시글 내용 출력
     4. 수정/삭제/목록 버튼 -->
     <p><a href="./index.php">목록으로</a></p>
-
+    <h2>글 상세보기</h2>
     <!-- error 있는 경우 -->
     <?php if ($error): ?>
         <?php http_response_code(404); ?>
@@ -64,7 +64,7 @@ finally {
     
     <!-- error 없으면 -->
     <?php else: ?>
-    <h2><?=$post['title']?></h2>
+    <h4>제목: <?=$post['title']?></h4>
     작성자: <?=htmlspecialchars($post['name'])?><br>
     작성일: <?=htmlspecialchars($post['created_at'])?><br>
     <?php if (!empty($post['updated_at'])): ?>

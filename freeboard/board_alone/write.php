@@ -39,6 +39,7 @@ if (isset($_SESSION['error'])) {
 
             <!-- 등록 버튼 -->
             <input type="submit" value="등록하기">
+            <button><a href="./index.php">취소하기</a></button>
         </fieldset>
     </form>
 </body>

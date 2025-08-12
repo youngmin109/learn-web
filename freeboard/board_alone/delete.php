@@ -7,6 +7,12 @@ require_once './init.php';
 $post = null;
 $error = null;
 
+session_start();
+if (isset($_SESSION['error'])){
+    echo $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
 // id 검증
 if (!isset($_GET['id'])) {
     $error = '존재하지 않는 글입니다.';
