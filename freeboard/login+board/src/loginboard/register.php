@@ -1,6 +1,8 @@
 <?php
 // 회원가입 페이지
 session_start();
+// header 출력
+require_once '../core/header.php';
 ?>
 <!-- step1. 폼 부터 작성 -->
 <!DOCTYPE html>
@@ -13,10 +15,14 @@ session_start();
 </head>
 <body>
     <p style='color:red'><?php
-    // 세션 에러메시지
+    // 세션 에러 & 성공 메시지
     if (isset($_SESSION['error'])) {
         echo $_SESSION['error'];
         unset($_SESSION['error']);
+    }
+    if (isset($_SESSION['success'])) {
+        echo $_SESSION['success'];
+        unset($_SESSION['success']);
     }?></p>
     <h2>회원가입</h2>
     <fieldset>

@@ -14,7 +14,7 @@ if ($username === '' || $password === ''){
 try {
     $mysqli = db_con();
     // step3. 아이디 검증
-    $sql = "SELECT username, password, name FROM users WHERE username='$username'";
+    $sql = "SELECT id, username, password, name FROM users WHERE username='$username'";
     $result = $mysqli->query($sql);
     
     // 해당 아이디가 없음
@@ -33,7 +33,8 @@ try {
 
     // 회원가입 성공 시 success메시지 저장 후
     $_SESSION['success'] = "로그인 성공!";
-    // 세션에 username, name 저장
+    // 세션에 id(-> posts의 user_id), username, name 저장
+    $_SESSION['user_id'] = $row['id'];
     $_SESSION['username'] = $row['username'];
     $_SESSION['name'] = $row['name'];
 
