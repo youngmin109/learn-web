@@ -22,15 +22,17 @@ if ($title === '' || $content === '') {
 try {
     $mysqli = db_con();
     // step2. 수정 쿼리 작성
-    $sql = "UPDATE posts SET title = '$title' content = '$content'
+    $sql = "UPDATE posts SET title = '$title', content = '$content'
             WHERE id = $id";
     // step3. 쿼리 성공시 성공메시지 남기고, view페이지로 리디렉션
     $mysqli->query($sql);
     $_SESSION['success'] = "성공적으로 수정하였습니다.";
+    header("Location: ./view.php?id=" . $id);
     exit;
+
 } catch (Exception) {
     // 예외처리 - 실패시 view로 리디렉션
-    fail('알 수 없는 오류', "./view?id=.php");
+    fail('알 수 없는 오류', "./view.php?id=" . $id);
 } finally {
     if ($mysqli && $mysqli instanceof mysqli) {
         $mysqli->close();

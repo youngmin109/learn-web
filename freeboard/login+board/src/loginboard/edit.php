@@ -33,7 +33,7 @@ try {
         fail('작성한 글만 수정할 수 있습니다.', "./view.php?id=$post_id");
     }
     // step2. 검증 완료 시 title + content 데이터 가져오기
-    $sql = "SELECT title, content FROM posts WHERE id=$post_id";
+    $sql = "SELECT id, title, content FROM posts WHERE id=$post_id";
     $result = $mysqli->query($sql);
     $post = $result->fetch_assoc();
 } catch (Exception) {

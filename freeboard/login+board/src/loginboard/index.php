@@ -2,6 +2,7 @@
 session_start();
 require_once '../core/init.php';
 // 이 페이지는 게시판 목록을 보여줍니다.
+// 기능 : 페이지네이션, 게시글 없을시 미출력
 // step1. 세션 목록 가져오기 & 변수 저장
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '손';
 
